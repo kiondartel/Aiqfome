@@ -5,6 +5,7 @@ import { enableScreens } from "react-native-screens";
 import Routes from "./src/routes/Router";
 import { Pallet } from "./src/theme/theme";
 import { NavigationContainer } from "@react-navigation/native";
+import ProductsProvider from "./src/contexts/ProductsContext/ProductsContext";
 
 enableScreens();
 
@@ -12,7 +13,9 @@ const App = (): React.JSX.Element => {
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
-        <Routes />
+        <ProductsProvider>
+          <Routes />
+        </ProductsProvider>
       </SafeAreaView>
     </NavigationContainer>
   );
