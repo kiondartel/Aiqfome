@@ -1,19 +1,32 @@
-import React, { createContext, useState, useEffect } from "react";
+// src/contexts/ProductsContext/ProductsContext.tsx
+import React, { createContext, useState, useEffect, useCallback } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Product } from "../../services/Products/ProductsPayload";
 import { getProducts } from "../../services/Products/ProductsService";
 
-export const ProductsContext = createContext<{
+type ContextType = {
   products: Product[];
+  favorites: number[];
   loading: boolean;
   refresh: () => void;
-}>({
+  toggleFavorite: (id: number) => void;
+  isFavorite: (id: number) => boolean;
+};
+
+export const ProductsContext = createContext<ContextType>({
   products: [],
+  favorites: [],
   loading: false,
   refresh: () => {},
+  toggleFavorite: () => {},
+  isFavorite: () => false,
 });
+
+const FAVORITES_KEY = "@myapp:favorites";
 
 const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [favorites, setFavorites] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchProducts = async () => {
@@ -28,13 +41,41 @@ const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const loadFavorites = async () => {
+    const favString = await AsyncStorage.getItem(FAVORITES_KEY);
+    if (favString) setFavorites(JSON.parse(favString));
+  };
+
+  useEffect(() => {
+    AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+  }, [favorites]);
+
   useEffect(() => {
     fetchProducts();
+    loadFavorites();
   }, []);
+
+  const toggleFavorite = (id: number) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+    );
+  };
+
+  const isFavorite = useCallback(
+    (id: number) => favorites.includes(id),
+    [favorites]
+  );
 
   return (
     <ProductsContext.Provider
-      value={{ products, loading, refresh: fetchProducts }}
+      value={{
+        products,
+        favorites,
+        loading,
+        refresh: fetchProducts,
+        toggleFavorite,
+        isFavorite,
+      }}
     >
       {children}
     </ProductsContext.Provider>
