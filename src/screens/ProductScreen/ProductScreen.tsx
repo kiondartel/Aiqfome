@@ -1,4 +1,3 @@
-// src/screens/ProductScreen/ProductScreen.tsx
 import React, { useCallback } from "react";
 import {
   FlatList,
@@ -11,10 +10,11 @@ import {
 import Header from "../../components/Header/Header";
 import Spinner from "../../components/Spinner/Spinner";
 import useProductList from "../../hooks/useProductList";
-import { ProductItem } from "./components/ProductItem";
+
 import { Pallet } from "../../theme/theme";
 import { TextInput } from "react-native-gesture-handler";
 import { Product } from "../../services/Products/ProductsPayload";
+import ProductItem from "./components/ProductItem";
 
 export const ProductScreen: React.FC = () => {
   const {
