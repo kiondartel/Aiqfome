@@ -6,18 +6,21 @@ import Routes from "./src/routes/Router";
 import { Pallet } from "./src/theme/theme";
 import { NavigationContainer } from "@react-navigation/native";
 import ProductsProvider from "./src/contexts/ProductsContext/ProductsContext";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 enableScreens();
 
 const App = (): React.JSX.Element => {
   return (
-    <NavigationContainer>
-      <SafeAreaView style={styles.container}>
-        <ProductsProvider>
-          <Routes />
-        </ProductsProvider>
-      </SafeAreaView>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <SafeAreaView style={styles.container}>
+          <ProductsProvider>
+            <Routes />
+          </ProductsProvider>
+        </SafeAreaView>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 };
 
