@@ -31,20 +31,26 @@ const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
   const { scheduleDailySummary } = useNotifications();
 
   const fetchProducts = async () => {
-    setLoading(true);
     try {
       const data = await getProducts();
       setProducts(data);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
   const loadFavorites = async () => {
-    const favString = await AsyncStorage.getItem(FAVORITES_KEY);
-    if (favString) setFavorites(JSON.parse(favString));
+    try {
+      const favString = await AsyncStorage.getItem(FAVORITES_KEY);
+      if (favString) {
+        const parsed = JSON.parse(favString);
+        if (Array.isArray(parsed)) {
+          setFavorites(parsed);
+        }
+      }
+    } catch (error) {
+      console.error("Erro ao carregar favoritos:", error);
+    }
   };
 
   const toggleFavorite = (id: number) => {
@@ -59,12 +65,32 @@ const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   useEffect(() => {
-    AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
-  }, [favorites]);
+    if (loading) return;
+
+    const saveFavorites = async () => {
+      try {
+        await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+      } catch (error) {
+        console.error("Erro ao salvar favoritos:", error);
+      }
+    };
+
+    saveFavorites();
+  }, [favorites, loading]);
 
   useEffect(() => {
-    fetchProducts();
-    loadFavorites();
+    const initializeData = async () => {
+      setLoading(true);
+      try {
+        await Promise.all([fetchProducts(), loadFavorites()]);
+      } catch (error) {
+        console.error("Erro ao inicializar dados:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializeData();
   }, []);
 
   useEffect(() => {
