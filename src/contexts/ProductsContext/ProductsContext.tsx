@@ -1,8 +1,8 @@
-// src/contexts/ProductsContext/ProductsContext.tsx
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Product } from "../../services/Products/ProductsPayload";
 import { getProducts } from "../../services/Products/ProductsService";
+import { useNotifications } from "../../hooks/useNotifications";
 
 type ContextType = {
   products: Product[];
@@ -28,6 +28,7 @@ const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [favorites, setFavorites] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
+  const { scheduleDailySummary } = useNotifications();
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -46,15 +47,6 @@ const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
     if (favString) setFavorites(JSON.parse(favString));
   };
 
-  useEffect(() => {
-    AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
-  }, [favorites]);
-
-  useEffect(() => {
-    fetchProducts();
-    loadFavorites();
-  }, []);
-
   const toggleFavorite = (id: number) => {
     setFavorites((prev) =>
       prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
@@ -65,6 +57,21 @@ const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
     (id: number) => favorites.includes(id),
     [favorites]
   );
+
+  useEffect(() => {
+    AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+  }, [favorites]);
+
+  useEffect(() => {
+    fetchProducts();
+    loadFavorites();
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      scheduleDailySummary(favorites.length);
+    }
+  }, [loading]);
 
   return (
     <ProductsContext.Provider
