@@ -15,6 +15,7 @@ import { Pallet } from "../../theme/theme";
 import { TextInput } from "react-native-gesture-handler";
 import { Product } from "../../services/Products/ProductsPayload";
 import ProductItem from "./components/ProductItem";
+import CategoryCarousel from "./components/CategoryCarousel";
 
 export const ProductScreen: React.FC = () => {
   const {
@@ -24,6 +25,8 @@ export const ProductScreen: React.FC = () => {
     isFavorite,
     searchQuery,
     setSearchQuery,
+    showFavs,
+    toggleShowFavs,
   } = useProductList();
 
   const renderItem = useCallback(
@@ -48,7 +51,6 @@ export const ProductScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
@@ -56,6 +58,17 @@ export const ProductScreen: React.FC = () => {
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
+        <CategoryCarousel />
+      </View>
+      <View style={styles.filterBar}>
+        <TouchableOpacity
+          onPress={toggleShowFavs}
+          style={[styles.btn, showFavs && styles.btnPurple]}
+        >
+          <Text style={[styles.btnText, showFavs && styles.btnPurple]}>
+            {showFavs ? "Ver todos" : "Ver favoritos"}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       <FlatList
@@ -79,14 +92,34 @@ const styles = StyleSheet.create({
   searchContainer: {
     paddingHorizontal: 16,
     paddingVertical: 8,
-    backgroundColor: Pallet.colors.mono,
+    backgroundColor: Pallet.colors.Purple.Purple500,
   },
   searchInput: {
     height: 40,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: Pallet.colors.neutrals.Neutrals400,
+    borderColor: Pallet.colors.mono,
+    backgroundColor: Pallet.colors.mono,
     paddingHorizontal: 12,
+  },
+  btn: {
+    backgroundColor: Pallet.colors.mono,
+    borderWidth: 1,
+    borderColor: Pallet.colors.neutrals.Neutrals400,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    alignSelf: "flex-end",
+    marginVertical: 5,
+  },
+  btnPurple: {
+    backgroundColor: Pallet.colors.Purple.Purple500,
+    color: Pallet.colors.mono,
+    borderColor: Pallet.colors.mono,
+  },
+  btnText: {
+    color: Pallet.colors.text.t700,
+    fontSize: 14,
   },
   list: { paddingHorizontal: 12 },
 });
