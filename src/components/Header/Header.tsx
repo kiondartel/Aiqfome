@@ -11,13 +11,13 @@ export default function Header() {
       <Icon
         height={32}
         width={28}
-        primary={Pallet.colors.Purple.Purple500}
+        primary={Pallet.colors.mono}
         source="drawer"
       />
       <Logo
         height={40}
         width={32}
-        primary={Pallet.colors.Purple.Purple500}
+        primary={Pallet.colors.mono}
         source="baseLogo"
       />
       <Image source={userImage} style={styles.avatar} />
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    backgroundColor: Pallet.colors.mono,
+    backgroundColor: Pallet.colors.Purple.Purple500,
   },
   avatar: {
     width: 36,
