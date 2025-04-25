@@ -35,12 +35,20 @@ const ProductItem: React.FC<Props> = ({ item, onToggle, favorited }) => {
           style={styles.commentButton}
         >
           <Text style={styles.commentButtonText}>
-            {showComment ? "Ocultar comentário" : "Ver comentário"}
+            {showComment ? "Ocultar comentários" : "Ver comentários"}
           </Text>
         </Pressable>
 
         {showComment && (
-          <Text style={styles.comment}>{item.rating.topComment}</Text>
+          <View style={styles.ratingContainer}>
+            <Icon
+              height={30}
+              width={23}
+              primary={Pallet.colors.Purple.Purple500}
+              source="user"
+            />
+            <Text style={styles.comment}>{item.rating.topComment}</Text>
+          </View>
         )}
       </View>
 
@@ -94,7 +102,6 @@ const styles = StyleSheet.create({
   ratingContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginLeft: 8,
   },
 
   rateText: {

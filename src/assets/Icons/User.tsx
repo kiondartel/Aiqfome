@@ -1,0 +1,39 @@
+import React from "react";
+import Svg, { Circle, G, Path } from "react-native-svg";
+import { SourceProp } from "../../types/Source";
+
+const User = ({ height, width, primary }: SourceProp) => (
+  <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
+    <G id="SVGRepo_bgCarrier" stroke-width="0" />
+
+    <G
+      id="SVGRepo_tracerCarrier"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <G id="SVGRepo_iconCarrier">
+      <Circle cx="10" cy="6" r="4" stroke={primary} stroke-width="1.5" />
+      <Path
+        d="M19 2C19 2 21 3.2 21 6C21 8.8 19 10 19 10"
+        stroke={primary}
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+      <Path
+        d="M17 4C17 4 18 4.6 18 6C18 7.4 17 8 17 8"
+        stroke={primary}
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+      <Path
+        d="M13 20.6151C12.0907 20.8619 11.0736 21 10 21C6.13401 21 3 19.2091 3 17C3 14.7909 6.13401 13 10 13C13.866 13 17 14.7909 17 17C17 17.3453 16.9234 17.6804 16.7795 18"
+        stroke={primary}
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+    </G>
+  </Svg>
+);
+
+export default User;
