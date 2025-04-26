@@ -10,6 +10,11 @@ import {
 } from "react-native";
 import { images } from "../../../constants/imageAssets";
 import { Pallet } from "../../../theme/theme";
+import {
+  moderateScale,
+  scaleFont,
+  scaleVertical,
+} from "../../../utils/responsive";
 
 const foodTypes = [
   { id: 1, name: "Massas", image: images.pizza },
@@ -59,22 +64,23 @@ export const CategoryCarousel: React.FC<{
 
 const styles = StyleSheet.create({
   carouselContainer: {
-    height: 100,
-    marginTop: 16,
+    height: scaleVertical(100),
+    marginTop: moderateScale(16),
     backgroundColor: Pallet.colors.Purple.Purple500,
   },
   carouselContent: {
-    paddingHorizontal: 5,
+    paddingHorizontal: moderateScale(5),
     alignItems: "center",
   },
   categoryItem: {
-    marginRight: 12,
+    marginRight: moderateScale(12),
     alignItems: "center",
   },
   categoryText: {
-    fontSize: 12,
+    fontSize: scaleFont(12),
     textAlign: "center",
     color: Pallet.colors.mono,
+    includeFontPadding: false,
   },
 });
 

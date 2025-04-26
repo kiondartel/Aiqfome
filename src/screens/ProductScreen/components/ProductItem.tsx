@@ -4,6 +4,11 @@ import { Product } from "../../../services/Products/ProductsPayload";
 import { Pallet } from "../../../theme/theme";
 import Icon from "../../../components/IconManager/IconManager";
 import { formatBRL } from "../../../utils/formatBRL";
+import {
+  moderateScale,
+  scaleFont,
+  scaleVertical,
+} from "../../../utils/responsive";
 
 type Props = {
   item: Product;
@@ -76,16 +81,16 @@ export default React.memo(ProductItem);
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    paddingVertical: 12,
+    paddingVertical: scaleVertical(12),
     borderBottomWidth: 1,
     borderColor: Pallet.colors.neutrals.Neutrals200,
     alignItems: "flex-start",
   },
   image: {
-    width: 64,
-    height: 64,
-    borderRadius: 8,
-    marginRight: 12,
+    width: moderateScale(64),
+    height: moderateScale(64),
+    borderRadius: moderateScale(8),
+    marginRight: moderateScale(12),
   },
   info: {
     flex: 1,
@@ -96,8 +101,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   title: {
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: scaleFont(16),
   },
   ratingContainer: {
     flexDirection: "row",
@@ -105,33 +109,35 @@ const styles = StyleSheet.create({
   },
 
   rateText: {
-    fontSize: 12,
-    marginLeft: 4,
+    fontSize: scaleFont(12),
+    marginLeft: moderateScale(4),
     color: Pallet.colors.text.t700,
   },
   price: {
-    fontSize: 14,
-    marginBottom: 4,
+    fontSize: scaleFont(14),
+    marginBottom: scaleVertical(5),
+    color: Pallet.colors.text.t700,
   },
   commentButton: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: scaleVertical(4),
+    paddingHorizontal: moderateScale(8),
     alignSelf: "flex-start",
     backgroundColor: Pallet.colors.Purple.Purple700,
-    borderRadius: 4,
-    marginBottom: 4,
+    borderRadius: moderateScale(4),
+    marginBottom: scaleVertical(4),
   },
   commentButtonText: {
-    fontSize: 12,
+    fontSize: scaleFont(12),
     color: Pallet.colors.mono,
   },
   comment: {
-    fontSize: 14,
+    fontSize: scaleFont(14),
     color: Pallet.colors.text.t700,
-    paddingLeft: 4,
+    paddingLeft: moderateScale(4),
+    lineHeight: scaleFont(18),
   },
   favoriteButton: {
-    padding: 8,
-    marginLeft: 8,
+    padding: moderateScale(8),
+    marginLeft: moderateScale(8),
   },
 });

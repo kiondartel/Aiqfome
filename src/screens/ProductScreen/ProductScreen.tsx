@@ -16,6 +16,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { Product } from "../../services/Products/ProductsPayload";
 import ProductItem from "./components/ProductItem";
 import CategoryCarousel from "./components/CategoryCarousel";
+import { moderateScale, scaleVertical } from "../../utils/responsive";
 
 export const ProductScreen: React.FC = () => {
   const {
@@ -82,46 +83,55 @@ export const ProductScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  loadingContainer: { flex: 1, justifyContent: "center" },
+  container: {
+    flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+  },
   filterBar: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 12,
+    padding: moderateScale(12),
   },
   searchContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: moderateScale(16),
+    paddingVertical: scaleVertical(8),
     backgroundColor: Pallet.colors.Purple.Purple500,
   },
   searchInput: {
-    height: 40,
-    borderRadius: 8,
+    height: scaleVertical(40),
+    borderRadius: moderateScale(8),
     borderWidth: 1,
     borderColor: Pallet.colors.mono,
     backgroundColor: Pallet.colors.mono,
-    paddingHorizontal: 12,
+    paddingHorizontal: moderateScale(12),
+    fontSize: moderateScale(14),
   },
   btn: {
     backgroundColor: Pallet.colors.mono,
     borderWidth: 1,
     borderColor: Pallet.colors.neutrals.Neutrals400,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 20,
+    paddingVertical: scaleVertical(8),
+    paddingHorizontal: moderateScale(12),
+    borderRadius: moderateScale(20),
     alignSelf: "flex-end",
-    marginVertical: 5,
+    marginVertical: scaleVertical(5),
   },
   btnPurple: {
     backgroundColor: Pallet.colors.Purple.Purple500,
-    color: Pallet.colors.mono,
     borderColor: Pallet.colors.mono,
   },
   btnText: {
     color: Pallet.colors.text.t700,
-    fontSize: 14,
+    fontSize: moderateScale(14),
   },
-  list: { paddingHorizontal: 12 },
+  btnTextPurple: {
+    color: Pallet.colors.mono,
+  },
+  list: {
+    paddingHorizontal: moderateScale(12),
+  },
 });
-
 export default ProductScreen;
